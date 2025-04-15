@@ -3685,6 +3685,7 @@ struct netdev_queue *netdev_core_pick_tx(struct net_device *dev,
 		queue_index = netdev_cap_txqueue(dev, queue_index);
 	}
 
+
 	skb_set_queue_mapping(skb, queue_index);
 	return netdev_get_tx_queue(dev, queue_index);
 }
@@ -3981,6 +3982,7 @@ static int get_rps_cpu(struct net_device *dev, struct sk_buff *skb,
 
 	if (skb_rx_queue_recorded(skb)) {
 		u16 index = skb_get_rx_queue(skb);
+
 
 		if (unlikely(index >= dev->real_num_rx_queues)) {
 			WARN_ONCE(dev->real_num_rx_queues > 1,
@@ -4439,6 +4441,7 @@ static int netif_rx_internal(struct sk_buff *skb)
 		rcu_read_lock();
 
 		cpu = get_rps_cpu(skb->dev, skb, &rflow);
+
 		if (cpu < 0)
 			cpu = smp_processor_id();
 
